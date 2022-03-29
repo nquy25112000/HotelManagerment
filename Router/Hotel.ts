@@ -8,21 +8,26 @@ const Controller = new HotelController();
 
 
 export class HotelRouter {
-    public HotelRouter: Router;
+    public Router: Router;
 
     constructor() {
-        this.HotelRouter = Router();
+        this.Router = Router();
         this.routers();
         this.config();
     }
 
     routers() {
-        this.HotelRouter.get('/getAll', Controller.findAllRole);
-        this.HotelRouter.post('/create', Controller.createRole);
+        this.Router.get('/findAll', Controller.findAll);
+        this.Router.get('/findOne/:id', Controller.findOne);
+        this.Router.post('/findItem', Controller.findItem);
+
+        this.Router.post('/create', Controller.create);
+        this.Router.put('/update', Controller.update);
+        this.Router.delete('/delete', Controller.delete);
     }
 
     public config(): void {
-        this.HotelRouter.use(express.json());
-        this.HotelRouter.use(bodyParser.urlencoded({ extended: true }));
+        this.Router.use(express.json());
+        this.Router.use(bodyParser.urlencoded({ extended: true }));
     }
 }

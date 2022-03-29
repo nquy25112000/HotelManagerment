@@ -1,13 +1,13 @@
 import express from 'express';
 import { Router } from "express";
-import { UsersController } from "../Controllers/Users"
+import { RoomController } from "../Controllers/Room"
 import bodyParser from 'body-parser';
 
 
-const Controller = new UsersController();
+const Controller = new RoomController();
 
 
-export class UsersRouter {
+export class RoomRouter {
     public Router: Router;
 
     constructor() {

@@ -1,13 +1,13 @@
 import express from 'express';
 import { Router } from "express";
-import { UsersController } from "../Controllers/Users"
+import { ServicesController } from "../Controllers/Service"
 import bodyParser from 'body-parser';
 
 
-const Controller = new UsersController();
+const Controller = new ServicesController();
 
 
-export class UsersRouter {
+export class ServiceRouter {
     public Router: Router;
 
     constructor() {

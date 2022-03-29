@@ -1,21 +1,12 @@
-import { Hotel } from '../Models/Hotel'
 import { HotelRepository } from '../Repositories/Repository/Hotel';
+import { BaseService } from './BaseService';
 
 const Repository = new HotelRepository();
 
 
-export class HotelService {
+export class HotelService extends BaseService {
     constructor() {
-    }
-
-    public getHotel = async () => {
-        const rs = await Repository.findAll();
-        return rs;
-    }
-
-    public createHotel = async (item: Hotel[]) => {
-        const rs = await Repository.create(item);
-        return rs;
+        super(Repository);
     }
 
 }

@@ -1,20 +1,13 @@
 import { Role } from '../Models/Role'
 import { RoleRepository } from '../Repositories/Repository/Role';
+import { BaseService } from './BaseService';
 
 const Repository = new RoleRepository();
 
 
-export class RoleService {
+export class RoleService extends BaseService {
     constructor() {
+        super(Repository);
     }
 
-    public getRoles = async () => {
-        const rs = await Repository.findAll();
-        return rs;
-    }
-
-    public createRoles = async (item: Role[]) => {
-        const rs = await Repository.create(item);
-        return rs;
-    }
 }

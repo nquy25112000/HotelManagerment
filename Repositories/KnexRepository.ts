@@ -11,11 +11,11 @@ export abstract class KnexRepository<T> implements RepositoryGeneral<T> {
 
     delete(id: string): Promise<boolean> {
         return knex(this.tableName)
-            .where('uuid', id)
+            .where('id', id)
             .del()
     }
 
-    findAll(): Promise<boolean> {
+    findAll(): Promise<T[]> {
         return knex(this.tableName)
             .select()
     }
@@ -26,7 +26,7 @@ export abstract class KnexRepository<T> implements RepositoryGeneral<T> {
     }
     update(id: string, item: T[]): Promise<T[]> {
         return knex(this.tableName)
-            .where('uuid', '=', id)
+            .where('id', '=', id)
             .update(item)
     }
     findOne(id: string): Promise<boolean> {
@@ -36,7 +36,7 @@ export abstract class KnexRepository<T> implements RepositoryGeneral<T> {
             })
             .select()
     }
-    findItem(item: Partial<T>): Promise<T[]> {
+    findItem(item: T[]): Promise<T[]> {
         return knex(this.tableName)
             .where(item)
             .select()
