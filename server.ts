@@ -11,6 +11,7 @@ import { RoomRouter } from './Router/Room'
 
 
 
+
 const roleRouter = new RoleRouter();
 const usersRouter = new UsersRouter();
 const holtelRouter = new HotelRouter();
@@ -19,6 +20,8 @@ const billRouter = new BillRouter();
 const serviceRouter = new ServiceRouter();
 const serviceOrdersRouter = new ServiceOrdersRouter();
 const bookRoomRouter = new BookRoomRouter();
+
+
 
 
 class Server {
@@ -35,6 +38,7 @@ class Server {
 
     public config(): void {
         this.app.use(express.json())
+
     }
 
     public router(): void {
@@ -51,6 +55,7 @@ class Server {
     }
     public start(): void {
         this.app.listen(3000, () => {
+
             console.log(`server running at port: ${this.PORT}`);
         });
     }

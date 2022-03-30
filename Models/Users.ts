@@ -10,6 +10,6 @@ export class Users extends bookshelf.Model<Users> {
 
     get tableName() { return 'Users'; }
     bookRoom(): Bookshelf.Collection<BookRoom> {
-        return this.hasMany(BookRoom, 'roleId');
+        return this.hasMany(BookRoom, 'usersId');
     }
 }
