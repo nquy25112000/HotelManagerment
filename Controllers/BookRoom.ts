@@ -2,10 +2,11 @@ import { BookRoomService } from '../Services/BookRoom'
 import { Request, Response, NextFunction } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { StatusCode } from './StatusCode';
+import { BaseController } from './BaseController';
 const statusCode = new StatusCode();
 const service = new BookRoomService();
 
-export class BookRoomController {
+export class BookRoomController  extends BaseController{
 
 
     public findAll = async (req: Request, res: Response, next: NextFunction) => {

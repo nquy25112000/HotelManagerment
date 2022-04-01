@@ -8,7 +8,10 @@ module.exports = {
     database: "testhotel"
   },
   migrations: {
-    directory: __dirname + '/migrationss'
+    file: __dirname + '/migrations'
+  },
+  seed: {
+    file: __dirname + '/seed'
   },
   useNullAsDefault: true
 }

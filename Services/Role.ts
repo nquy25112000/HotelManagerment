@@ -8,28 +8,47 @@ const Repository = new RoleRepository();
 export class RoleService {
     public findAll = async () => {
         const rs = await Repository.findAll();
-        return rs;
+        if (rs == null) {
+            return Promise.reject("Not Found")
+        }
+        return Promise.resolve(rs)
     }
 
     public create = async (item: []) => {
         const rs = await Repository.create(item);
-        return rs;
+        if (rs == null) {
+            return Promise.reject("Not Found")
+        }
+        return Promise.resolve("Sucsuess")
     }
     public update = async (id: string, item: []) => {
         const rs = await Repository.update(id, item);
-        return rs;
+        if (rs == null) {
+            return Promise.reject({ messager: "Update Faild" })
+        }
+        return Promise.resolve({ messager: "Sucsess" })
     }
     public delete = async (id: string) => {
-        const rs = await Repository.delete(id);
-        return rs;
+        const rs = await Repository.delete(id)
+        if (rs == 0) {
+            return Promise.reject("Not Found")
+        }
+        return Promise.resolve("Sucsuess")
     }
+
     public findOne = async (id: string) => {
         const rs = await Repository.findOne(id)
-        return rs;
+        if (rs == false) {
+            return Promise.reject("Not Found")
+        }
+        return Promise.resolve(rs)
     }
     public findItem = async (item: []) => {
         const rs = await Repository.findItem(item);
-        return rs;
+        if (rs == null) {
+            return Promise.reject("Not Found")
+        }
+        return Promise.resolve(rs)
     }
 
 

@@ -24,7 +24,7 @@ export class RoleRouter {
 
         this.Router.post('/create', Controller.create);
         this.Router.put('/update', Controller.update);
-        this.Router.delete('/delete', Controller.delete);
+        this.Router.delete('/delete/:id', Controller.delete);
     }
 
     public config(): void {

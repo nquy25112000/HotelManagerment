@@ -9,9 +9,9 @@ export abstract class KnexRepository<T> implements RepositoryGeneral<T> {
         public tableName: string
     ) { this.tableName = tableName; }
 
-    delete(id: string): Promise<boolean> {
+    delete(id: string): Promise<any> {
         return knex(this.tableName)
-            .where('id', id)
+            .where('uuid', id)
             .del()
     }
 

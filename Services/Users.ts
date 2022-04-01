@@ -30,6 +30,17 @@ export class UsersService {
         const rs = await Repository.findItem(item);
         return rs;
     }
+    public selectAcount = async (user: string, pass: string) => {
+        const rs = await Repository.selectAcount(user, pass);
+        return rs;
+    }
 
-
+    public selectName = async (user: string) => {
+        const rs = await Repository.selectName(user);
+        return rs;
+    }
+    public selectPass = async (pass: string) => {
+        const rs = await Repository.selectPass(pass);
+        return rs;
+    }
 }

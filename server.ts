@@ -1,4 +1,8 @@
 import express from 'express';
+import session from 'express-session';
+import passport from 'passport';
+import jwt from 'jsonwebtoken';
+
 
 import { RoleRouter } from './Router/Role';
 import { UsersRouter } from './Router/Users'
@@ -11,6 +15,10 @@ import { RoomRouter } from './Router/Room'
 
 
 
+import { Passport } from './Config/Passport'
+
+const passportConfig = new Passport();
+
 
 const roleRouter = new RoleRouter();
 const usersRouter = new UsersRouter();
@@ -21,8 +29,13 @@ const serviceRouter = new ServiceRouter();
 const serviceOrdersRouter = new ServiceOrdersRouter();
 const bookRoomRouter = new BookRoomRouter();
 
+declare module "express-session" {
+    interface SessionData {
+        user: any;
+        uuid: any;
 
-
+    }
+}
 
 class Server {
     public app: express.Application
@@ -31,25 +44,49 @@ class Server {
     constructor() {
         this.app = express();
         this.config();
-        this.router();
         this.start();
+        this.router();
+
     }
 
 
     public config(): void {
         this.app.use(express.json())
+            .use(
+                session({
+                    secret: "keyboard cat",
+                    resave: false,
+                    saveUninitialized: true,
+                    cookie: { secure: false }
+                })
+            )
+            .use(passport.initialize())
+            .use(passport.session())
 
     }
 
     public router(): void {
-        this.app.use('/role', roleRouter.Router)
-        this.app.use('/users', usersRouter.Router)
-        this.app.use('/hotel', holtelRouter.Router)
-        this.app.use('/room', roomRouter.Router)
-        this.app.use('/bill', billRouter.Router)
-        this.app.use('/services', serviceRouter.Router)
-        this.app.use('/orders', serviceOrdersRouter.Router)
-        this.app.use('/bookroom', bookRoomRouter.Router)
+        this.app.use('/role', roleRouter.Router) //dùng checkAuthen
+            .use('/users', usersRouter.Router)
+            .use('/hotel', holtelRouter.Router)
+            .use('/room', roomRouter.Router)
+            .use('/bill', billRouter.Router)
+            .use('/services', serviceRouter.Router)
+            .use('/orders', serviceOrdersRouter.Router)
+            .use('/bookroom', bookRoomRouter.Router)
+
+            .post('/login', passportConfig.IsAuthenticate, (req, res, next) => {
+                const userr = req.user?.uuid;
+                const timeExpires = "1d";
+                const accesToken = jwt.sign({ userr }, "alo", { expiresIn: timeExpires });
+                res.json({ token: accesToken });
+            })
+
+            .get('/test', (req, res) => {
+                const author = req.headers['authorization'];
+                const token = author?.split(" ")[1];
+
+            })
 
 
     }
