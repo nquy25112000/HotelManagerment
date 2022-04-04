@@ -13,11 +13,13 @@ import { ServiceRouter } from './Router/Services'
 import { ServiceOrdersRouter } from './Router/ServiceOrders'
 import { RoomRouter } from './Router/Room'
 
+import { TokenController } from './Controllers/Token'
+const tokenController = new TokenController();
 
 
-import { Passport } from './Config/Passport'
+import { Passport } from './Controllers/Passport'
 
-const passportConfig = new Passport();
+const passportController = new Passport();
 
 
 const roleRouter = new RoleRouter();
@@ -29,13 +31,7 @@ const serviceRouter = new ServiceRouter();
 const serviceOrdersRouter = new ServiceOrdersRouter();
 const bookRoomRouter = new BookRoomRouter();
 
-declare module "express-session" {
-    interface SessionData {
-        user: any;
-        uuid: any;
 
-    }
-}
 
 class Server {
     public app: express.Application
@@ -66,7 +62,7 @@ class Server {
     }
 
     public router(): void {
-        this.app.use('/role', roleRouter.Router) //dùng checkAuthen
+        this.app.use('/role', roleRouter.Router)
             .use('/users', usersRouter.Router)
             .use('/hotel', holtelRouter.Router)
             .use('/room', roomRouter.Router)
@@ -75,18 +71,19 @@ class Server {
             .use('/orders', serviceOrdersRouter.Router)
             .use('/bookroom', bookRoomRouter.Router)
 
-            .post('/login', passportConfig.IsAuthenticate, (req, res, next) => {
+            .post('/login', passportController.Authenticate, (req, res, next) => {
                 const userr = req.user?.uuid;
-                const timeExpires = "1d";
-                const accesToken = jwt.sign({ userr }, "alo", { expiresIn: timeExpires });
-                res.json({ token: accesToken });
+
+                res.json(userr);
             })
 
-            .get('/test', (req, res) => {
-                const author = req.headers['authorization'];
-                const token = author?.split(" ")[1];
 
-            })
+
+        // .get('/test', (req, res) => {
+        //     const author = req.headers['authorization'];
+        //     const token = author?.split(" ")[1];
+
+        // })
 
 
     }

@@ -8,5 +8,5 @@ export class BillRepository extends KnexRepository<Bill> {
     constructor() {
         super(bill.tableName);
     }
-    
+
 }
