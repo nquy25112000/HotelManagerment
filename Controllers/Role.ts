@@ -16,7 +16,6 @@ export class RoleController {
             const result = await service.findAll();
             baseController.sendResponse(result, req, res);
         }
-
         catch (err) {
             err
         }
@@ -27,7 +26,7 @@ export class RoleController {
 
     public create = async (req: Request, res: Response, next: NextFunction) => {
         const item = req.body;
-        item.id = uuidv4();
+        item.uuid = uuidv4();
         const result = await service.create(item);
         baseController.sendResponse(result, req, res);
     }
@@ -59,7 +58,6 @@ export class RoleController {
                 baseController.sendResponse(result, req, res);
             })
             .catch(err => { res.json(err); });
-
     }
 }
 
