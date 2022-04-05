@@ -8,4 +8,10 @@ export class TokenRepository {
         return knex("Token")
             .insert(item)
     }
+
+    findOne(token: string): Promise<any> {
+        return knex("Token")
+            .select()
+            .where({ tokenCode: token })
+    }
 }

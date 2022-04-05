@@ -2,7 +2,15 @@ import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from 'express';
 
+declare module "express-session" {
+    interface SessionData {
+        user: any;
+        uuid: any;
+
+    }
+}
 
 import { RoleRouter } from './Router/Role';
 import { UsersRouter } from './Router/Users'
@@ -71,19 +79,15 @@ class Server {
             .use('/orders', serviceOrdersRouter.Router)
             .use('/bookroom', bookRoomRouter.Router)
 
-            .post('/login', passportController.Authenticate, (req, res, next) => {
-                const userr = req.user?.uuid;
+            .post('/login', passportController.Authenticate, tokenController.createToken)
 
-                res.json(userr);
+
+
+            .get('/test', tokenController.authorization, (req, res) => {
+
+                res.json("hello")
+
             })
-
-
-
-        // .get('/test', (req, res) => {
-        //     const author = req.headers['authorization'];
-        //     const token = author?.split(" ")[1];
-
-        // })
 
 
     }

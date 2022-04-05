@@ -16,21 +16,21 @@ export class HotelController {
 
     public create = async (req: Request, res: Response, next: NextFunction) => {
         const item = req.body;
-        item.id = uuidv4();
+        item.uuid = uuidv4();
         await service.create(item);
         statusCode.OK(res);
     }
 
     public update = async (req: Request, res: Response, next: NextFunction) => {
         const item = req.body;
-        const id = item.id;
+        const id = item.uuid;
         await service.update(id, item);
         statusCode.OK(res);
     }
 
     public findOne = async (req: Request, res: Response, next: NextFunction) => {
         const item = req.body;
-        const id = item.id;
+        const id = item.uuid;
         const result = await service.findOne(id);
         statusCode.OK(res);
     }
@@ -42,7 +42,7 @@ export class HotelController {
     }
 
     public delete = async (req: Request, res: Response, next: NextFunction) => {
-        const id = req.params.id;
+        const id = req.params.uuid;
         const rs = await service.delete(id);
         statusCode.OK(res);
 
